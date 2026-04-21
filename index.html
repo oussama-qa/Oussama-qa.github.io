@@ -1,141 +1,1803 @@
 <!DOCTYPE html>
-<html lang="en"></html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Oussama El Omari — QA Automation Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
+<style>
+/* =============================================
+   DESIGN SYSTEM — Dark Precision / QA Culture
+   ============================================= */
+:root {
+  --bg:        #080C14;
+  --bg2:       #0D1220;
+  --bg3:       #111827;
+  --panel:     #141B2D;
+  --border:    rgba(0,210,190,0.15);
+  --border2:   rgba(255,255,255,0.06);
+  --teal:      #00D2BE;
+  --teal-dim:  rgba(0,210,190,0.12);
+  --teal-glow: rgba(0,210,190,0.35);
+  --amber:     #F59E0B;
+  --red:       #EF4444;
+  --green:     #10B981;
+  --text:      #E2E8F0;
+  --text-muted:#6B7E9F;
+  --text-dim:  #3D5070;
+  --white:     #FFFFFF;
 
-    <title>Resume</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://unpkg.com/feather-icons"></script>
+  --ff-display:'Bebas Neue', sans-serif;
+  --ff-mono:   'IBM Plex Mono', monospace;
+  --ff-body:   'IBM Plex Sans', sans-serif;
 
+  --ease:      cubic-bezier(0.16,1,0.3,1);
+  --ease-back: cubic-bezier(0.34,1.56,0.64,1);
+}
+
+/* RESET */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--ff-body);
+  font-weight:400;
+  line-height:1.6;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+img{display:block;max-width:100%}
+button{cursor:pointer;font-family:var(--ff-body);border:none;background:none}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--teal);border-radius:2px}
+
+/* SELECTION */
+::selection{background:var(--teal);color:var(--bg)}
+
+/* ========== ANIMATED BACKGROUND ========== */
+.bg-grid{
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(rgba(0,210,190,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,210,190,0.03) 1px, transparent 1px);
+  background-size:60px 60px;
+}
+.bg-glow-1{
+  position:fixed;top:-20%;right:-10%;width:600px;height:600px;
+  background:radial-gradient(circle,rgba(0,210,190,0.06) 0%,transparent 70%);
+  pointer-events:none;z-index:0;animation:bgPulse 8s ease-in-out infinite;
+}
+.bg-glow-2{
+  position:fixed;bottom:-20%;left:-10%;width:500px;height:500px;
+  background:radial-gradient(circle,rgba(245,158,11,0.04) 0%,transparent 70%);
+  pointer-events:none;z-index:0;animation:bgPulse 10s ease-in-out infinite reverse;
+}
+@keyframes bgPulse{0%,100%{opacity:0.6;transform:scale(1)}50%{opacity:1;transform:scale(1.1)}}
+
+/* ========== PROGRESS BAR ========== */
+#progress-bar{
+  position:fixed;top:0;left:0;height:2px;
+  background:linear-gradient(90deg,var(--teal),var(--amber));
+  width:0%;z-index:1000;transition:width 0.1s linear;
+  box-shadow:0 0 8px var(--teal);
+}
+
+/* ========== NAVBAR ========== */
+#navbar{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(1rem,4vw,4rem);
+  height:64px;
+  background:rgba(8,12,20,0.85);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border2);
+  transition:border-color 0.3s ease,box-shadow 0.3s ease;
+}
+#navbar.stuck{
+  border-bottom-color:var(--border);
+  box-shadow:0 4px 40px rgba(0,0,0,0.5);
+}
+.nav-brand{
+  display:flex;align-items:center;gap:0.75rem;
+}
+.nav-brand-icon{
+  width:32px;height:32px;border:1px solid var(--teal);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--ff-mono);font-size:0.7rem;color:var(--teal);
+  position:relative;
+}
+.nav-brand-icon::before,
+.nav-brand-icon::after{
+  content:'';position:absolute;width:5px;height:5px;background:var(--teal);
+}
+.nav-brand-icon::before{top:-1px;left:-1px;}
+.nav-brand-icon::after{bottom:-1px;right:-1px;}
+.nav-brand-name{
+  font-family:var(--ff-mono);font-size:0.78rem;
+  color:var(--text);letter-spacing:0.08em;
+}
+.nav-brand-name span{color:var(--teal);}
+.nav-links{
+  display:flex;align-items:center;gap:0.25rem;
+}
+.nav-links a{
+  font-family:var(--ff-mono);font-size:0.68rem;
+  color:var(--text-muted);letter-spacing:0.1em;text-transform:uppercase;
+  padding:0.4rem 0.75rem;border:1px solid transparent;
+  transition:color 0.2s,border-color 0.2s;
+  position:relative;
+}
+.nav-links a:hover{color:var(--teal);border-color:var(--border);}
+.nav-links a.active{color:var(--teal);}
+.nav-cta{
+  font-family:var(--ff-mono);font-size:0.68rem;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--bg) !important;
+  background:var(--teal);padding:0.45rem 1rem;
+  border:1px solid var(--teal) !important;
+  transition:background 0.2s,box-shadow 0.2s !important;
+}
+.nav-cta:hover{background:transparent !important;color:var(--teal) !important;box-shadow:0 0 12px var(--teal-glow) !important;}
+.hamburger{
+  display:none;flex-direction:column;gap:5px;
+  padding:6px;cursor:pointer;background:none;border:none;
+}
+.hamburger span{
+  display:block;width:20px;height:1.5px;background:var(--text);
+  transition:transform 0.3s var(--ease),opacity 0.3s;
+}
+.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+.mobile-nav{
+  display:none;position:fixed;inset:64px 0 0 0;
+  background:rgba(8,12,20,0.97);backdrop-filter:blur(20px);
+  flex-direction:column;align-items:center;justify-content:center;
+  gap:2.5rem;z-index:499;
+}
+.mobile-nav.open{display:flex;}
+.mobile-nav a{
+  font-family:var(--ff-display);font-size:3rem;letter-spacing:0.08em;
+  color:var(--text-muted);transition:color 0.2s;
+}
+.mobile-nav a:hover{color:var(--teal);}
+
+/* ========== SECTION LAYOUT ========== */
+section{position:relative;z-index:1;}
+.container{
+  max-width:1200px;margin:0 auto;
+  padding:0 clamp(1rem,5vw,4rem);
+}
+.section-pad{padding:6rem 0;}
+
+/* Section Header */
+.sec-label{
+  display:inline-flex;align-items:center;gap:0.6rem;
+  font-family:var(--ff-mono);font-size:0.7rem;letter-spacing:0.2em;
+  text-transform:uppercase;color:var(--teal);margin-bottom:1rem;
+}
+.sec-label::before{
+  content:'';display:block;width:24px;height:1px;background:var(--teal);
+}
+.sec-label::after{
+  content:'';display:block;width:8px;height:8px;
+  border:1px solid var(--teal);transform:rotate(45deg);
+  flex-shrink:0;
+}
+.sec-title{
+  font-family:var(--ff-display);
+  font-size:clamp(3rem,6vw,5.5rem);
+  line-height:0.95;letter-spacing:0.04em;
+  color:var(--white);margin-bottom:1.5rem;
+}
+.sec-sub{
+  font-size:1rem;color:var(--text-muted);
+  max-width:540px;line-height:1.75;
+  font-family:var(--ff-mono);font-weight:300;
+  font-size:0.85rem;
+}
+
+/* Reveal animation */
+.reveal{
+  opacity:0;transform:translateY(32px);
+  transition:opacity 0.8s var(--ease),transform 0.8s var(--ease);
+}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-left{
+  opacity:0;transform:translateX(-32px);
+  transition:opacity 0.8s var(--ease),transform 0.8s var(--ease);
+}
+.reveal-left.visible{opacity:1;transform:translateX(0);}
+.reveal-right{
+  opacity:0;transform:translateX(32px);
+  transition:opacity 0.8s var(--ease),transform 0.8s var(--ease);
+}
+.reveal-right.visible{opacity:1;transform:translateX(0);}
+.delay-1{transition-delay:0.1s;}
+.delay-2{transition-delay:0.2s;}
+.delay-3{transition-delay:0.3s;}
+.delay-4{transition-delay:0.4s;}
+.delay-5{transition-delay:0.5s;}
+
+/* ========== DIVIDER ========== */
+.divider{
+  height:1px;background:linear-gradient(90deg,transparent,var(--teal),transparent);
+  margin:0;opacity:0.3;
+}
+
+/* ========== HERO ========== */
+#home{
+  min-height:100vh;
+  display:flex;align-items:center;
+  padding-top:64px;
+  overflow:hidden;
+}
+.hero-inner{
+  display:grid;
+  grid-template-columns:1fr 420px;
+  gap:4rem;align-items:center;
+  padding:4rem 0;
+}
+/* Status chip */
+.status-chip{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  border:1px solid var(--border);
+  background:var(--teal-dim);
+  padding:0.35rem 1rem;
+  font-family:var(--ff-mono);font-size:0.7rem;
+  color:var(--teal);letter-spacing:0.1em;text-transform:uppercase;
+  margin-bottom:2rem;
+  animation:fadeUp 0.6s 0.1s var(--ease) both;
+}
+.status-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 6px var(--green);
+  animation:statusBlink 2s infinite;
+}
+@keyframes statusBlink{
+  0%,100%{opacity:1;}50%{opacity:0.4;}
+}
+
+.hero-eyebrow{
+  font-family:var(--ff-mono);font-size:0.78rem;letter-spacing:0.15em;
+  text-transform:uppercase;color:var(--teal);
+  margin-bottom:1rem;
+  animation:fadeUp 0.6s 0.2s var(--ease) both;
+}
+.hero-name{
+  font-family:var(--ff-display);
+  font-size:clamp(4rem,9vw,9rem);
+  line-height:0.88;letter-spacing:0.05em;
+  color:var(--white);margin-bottom:0.5rem;
+  animation:fadeUp 0.6s 0.25s var(--ease) both;
+}
+.hero-name .line-accent{
+  display:block;
+  background:linear-gradient(90deg,var(--teal),#00FFE5);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero-title-tag{
+  display:inline-block;
+  font-family:var(--ff-mono);font-size:0.75rem;letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--bg);background:var(--teal);
+  padding:0.3rem 0.75rem;margin-bottom:2rem;
+  animation:fadeUp 0.6s 0.35s var(--ease) both;
+}
+.hero-desc{
+  font-size:1.05rem;color:var(--text-muted);
+  max-width:520px;line-height:1.8;margin-bottom:2.5rem;
+  font-weight:300;
+  animation:fadeUp 0.6s 0.45s var(--ease) both;
+}
+.hero-actions{
+  display:flex;gap:1rem;flex-wrap:wrap;
+  animation:fadeUp 0.6s 0.55s var(--ease) both;
+}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:var(--teal);color:var(--bg);
+  font-family:var(--ff-mono);font-size:0.75rem;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:0.8rem 1.75rem;border:1px solid var(--teal);
+  transition:background 0.25s,box-shadow 0.25s,transform 0.25s var(--ease-back);
+}
+.btn-primary:hover{
+  background:transparent;color:var(--teal);
+  box-shadow:0 0 20px var(--teal-glow);transform:translateY(-2px);
+}
+.btn-secondary{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:transparent;color:var(--text);
+  font-family:var(--ff-mono);font-size:0.75rem;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:0.8rem 1.75rem;border:1px solid var(--border2);
+  transition:border-color 0.25s,color 0.25s,transform 0.25s var(--ease-back);
+}
+.btn-secondary:hover{border-color:var(--teal);color:var(--teal);transform:translateY(-2px);}
+
+.hero-metrics{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:0;margin-top:3rem;
+  border:1px solid var(--border2);
+  animation:fadeUp 0.6s 0.65s var(--ease) both;
+}
+.metric-item{
+  padding:1.2rem 1rem;text-align:center;
+  border-right:1px solid var(--border2);
+  position:relative;overflow:hidden;
+  transition:background 0.2s;
+}
+.metric-item:last-child{border-right:none;}
+.metric-item:hover{background:var(--teal-dim);}
+.metric-item::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--teal),transparent);
+  opacity:0;transition:opacity 0.3s;
+}
+.metric-item:hover::before{opacity:1;}
+.metric-num{
+  font-family:var(--ff-display);font-size:2.2rem;
+  color:var(--teal);line-height:1;
+}
+.metric-label{
+  font-family:var(--ff-mono);font-size:0.6rem;
+  text-transform:uppercase;letter-spacing:0.12em;
+  color:var(--text-muted);margin-top:0.25rem;
+}
+
+/* Hero Card */
+.hero-card{
+  border:1px solid var(--border);
+  background:var(--panel);
+  padding:0;overflow:hidden;
+  position:relative;
+  animation:fadeLeft 0.8s 0.5s var(--ease) both;
+}
+.hero-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--teal),var(--amber));
+}
+.card-header{
+  padding:1.2rem 1.5rem;
+  background:rgba(0,210,190,0.05);
+  border-bottom:1px solid var(--border2);
+  display:flex;align-items:center;gap:0.6rem;
+}
+.card-dots{display:flex;gap:0.4rem;}
+.card-dot{width:10px;height:10px;border-radius:50%;}
+.cd-r{background:#EF4444;}.cd-y{background:#F59E0B;}.cd-g{background:#10B981;}
+.card-title-bar{
+  font-family:var(--ff-mono);font-size:0.68rem;
+  color:var(--text-muted);letter-spacing:0.08em;margin-left:0.5rem;
+}
+.card-body{padding:1.5rem;}
+.card-avatar{
+  width:72px;height:72px;border:2px solid var(--teal);
+  border-radius:0;display:flex;align-items:center;justify-content:center;
+  font-family:var(--ff-display);font-size:2rem;color:var(--teal);
+  background:var(--teal-dim);margin-bottom:1rem;position:relative;
+}
+.card-avatar::after{
+  content:'';position:absolute;bottom:-6px;right:-6px;
+  width:100%;height:100%;border:1px solid var(--border);
+  background:transparent;
+}
+.card-name{
+  font-family:var(--ff-mono);font-size:0.95rem;
+  font-weight:600;color:var(--white);margin-bottom:0.2rem;
+}
+.card-role{
+  font-family:var(--ff-mono);font-size:0.7rem;
+  color:var(--teal);letter-spacing:0.08em;margin-bottom:1.2rem;
+}
+.card-stats{
+  display:flex;flex-direction:column;gap:0;
+  border:1px solid var(--border2);
+}
+.cs-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:0.65rem 0.75rem;border-bottom:1px solid var(--border2);
+  transition:background 0.2s;
+}
+.cs-row:last-child{border-bottom:none;}
+.cs-row:hover{background:var(--teal-dim);}
+.cs-key{font-family:var(--ff-mono);font-size:0.65rem;color:var(--text-muted);}
+.cs-val{font-family:var(--ff-mono);font-size:0.68rem;color:var(--teal);font-weight:500;}
+.card-tags{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:1rem;}
+.ctag{
+  font-family:var(--ff-mono);font-size:0.6rem;letter-spacing:0.06em;
+  border:1px solid var(--border);color:var(--text-muted);
+  padding:0.2rem 0.5rem;
+  transition:border-color 0.2s,color 0.2s;
+}
+.ctag:hover{border-color:var(--teal);color:var(--teal);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeLeft{from{opacity:0;transform:translateX(32px);}to{opacity:1;transform:translateX(0);}}
+
+/* ========== ABOUT ========== */
+#about{background:var(--bg2);}
+.about-grid{
+  display:grid;grid-template-columns:1fr 1.5fr;
+  gap:5rem;align-items:start;
+}
+.about-portrait-wrap{position:relative;}
+.portrait-box{
+  width:100%;aspect-ratio:3/4;
+  background:var(--panel);
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  font-family:var(--ff-display);font-size:8rem;color:var(--teal-dim);
+  /* Replace with: background-image:url('your-photo.jpg');background-size:cover;background-position:center; */
+}
+.portrait-box::before{
+  content:'';
+  font-family:var(--ff-display);font-size:9rem;
+  color:var(--border);position:absolute;
+  line-height:1;letter-spacing:0.1em;
+}
+.portrait-box::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 50%,var(--bg2) 100%);
+}
+.portrait-corner{
+  position:absolute;width:24px;height:24px;
+  border-color:var(--teal);border-style:solid;
+}
+.corner-tl{top:-1px;left:-1px;border-width:2px 0 0 2px;}
+.corner-tr{top:-1px;right:-1px;border-width:2px 2px 0 0;}
+.corner-bl{bottom:-1px;left:-1px;border-width:0 0 2px 2px;}
+.corner-br{bottom:-1px;right:-1px;border-width:0 2px 2px 0;}
+
+.cert-strip{
+  margin-top:1.5rem;
+  border:1px solid var(--border2);
+}
+.cert-item{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0.75rem 1rem;border-bottom:1px solid var(--border2);
+  transition:background 0.2s;
+}
+.cert-item:last-child{border-bottom:none;}
+.cert-item:hover{background:var(--teal-dim);}
+.cert-left{}
+.cert-name{font-size:0.82rem;font-weight:600;color:var(--text);margin-bottom:0.1rem;}
+.cert-org{font-family:var(--ff-mono);font-size:0.62rem;color:var(--text-muted);}
+.cert-badge{
+  font-family:var(--ff-mono);font-size:0.58rem;
+  background:var(--teal-dim);border:1px solid var(--border);
+  color:var(--teal);padding:0.2rem 0.5rem;white-space:nowrap;
+}
+
+.about-text p{
+  font-size:0.95rem;color:var(--text-muted);
+  line-height:1.9;margin-bottom:1.2rem;font-weight:300;
+}
+.about-text p strong{color:var(--text);font-weight:600;}
+.pull-quote{
+  border-left:3px solid var(--teal);
+  padding:0.75rem 1.25rem;
+  margin:1.5rem 0 2rem;
+  background:var(--teal-dim);
+}
+.pull-quote p{
+  font-family:var(--ff-mono);font-size:0.85rem;
+  color:var(--teal);font-style:italic;margin:0;line-height:1.6;
+}
+.fact-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:0;border:1px solid var(--border2);
+  margin-top:2rem;
+}
+.fact-item{
+  padding:1rem 1.2rem;border-bottom:1px solid var(--border2);
+  border-right:1px solid var(--border2);
+  transition:background 0.2s;
+}
+.fact-item:nth-child(even){border-right:none;}
+.fact-item:nth-last-child(-n+2){border-bottom:none;}
+.fact-item:hover{background:var(--teal-dim);}
+.fact-num{
+  font-family:var(--ff-display);font-size:2rem;color:var(--teal);line-height:1;
+}
+.fact-txt{font-family:var(--ff-mono);font-size:0.62rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-top:0.2rem;}
+
+/* ========== SKILLS ========== */
+#skills{background:var(--bg);}
+.skills-tabs{
+  display:flex;gap:0;flex-wrap:wrap;
+  border:1px solid var(--border2);
+  margin-bottom:3rem;
+}
+.tab-btn{
+  font-family:var(--ff-mono);font-size:0.7rem;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--text-muted);
+  padding:0.75rem 1.25rem;border-right:1px solid var(--border2);
+  border-bottom:none;border-top:none;border-left:none;
+  background:none;transition:background 0.2s,color 0.2s;
+  flex:1;text-align:center;
+}
+.tab-btn:last-child{border-right:none;}
+.tab-btn:hover{background:var(--teal-dim);color:var(--teal);}
+.tab-btn.active{
+  background:var(--teal);color:var(--bg);
+}
+.skill-panel{display:none;}
+.skill-panel.active{display:block;}
+
+.skill-bars-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:2rem 4rem;
+}
+.skill-bar-item{margin-bottom:0.5rem;}
+.skill-bar-header{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:0.5rem;
+}
+.skill-bar-name{
+  font-family:var(--ff-mono);font-size:0.75rem;color:var(--text);
+}
+.skill-bar-pct{
+  font-family:var(--ff-mono);font-size:0.68rem;color:var(--teal);
+}
+.skill-bar-track{
+  height:3px;background:var(--bg3);position:relative;overflow:visible;
+}
+.skill-bar-fill{
+  height:100%;background:linear-gradient(90deg,var(--teal),#00FFD4);
+  width:0;transition:width 1.2s var(--ease);
+  position:relative;
+}
+.skill-bar-fill::after{
+  content:'';position:absolute;right:-4px;top:50%;transform:translateY(-50%);
+  width:8px;height:8px;background:var(--teal);
+  border-radius:50%;box-shadow:0 0 8px var(--teal);
+}
+.skill-bar-fill.amber{
+  background:linear-gradient(90deg,var(--amber),#FCD34D);
+}
+.skill-bar-fill.amber::after{background:var(--amber);box-shadow:0 0 8px var(--amber);}
+.skill-bar-fill.green{
+  background:linear-gradient(90deg,var(--green),#34D399);
+}
+.skill-bar-fill.green::after{background:var(--green);box-shadow:0 0 8px var(--green);}
+
+/* Tools grid */
+.tools-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(130px,1fr));
+  gap:0;background:var(--border2);border:1px solid var(--border2);
+}
+.tool-cell{
+  background:var(--panel);
+  padding:1.25rem 1rem;
+  text-align:center;
+  transition:background 0.2s,transform 0.2s var(--ease-back);
+  cursor:default;
+}
+.tool-cell:hover{background:var(--bg3);transform:scale(1.02);}
+.tool-icon{font-size:1.5rem;margin-bottom:0.5rem;}
+.tool-name{
+  font-family:var(--ff-mono);font-size:0.62rem;
+  text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);
+}
+.tool-cell:hover .tool-name{color:var(--teal);}
+
+/* ========== PROJECTS ========== */
+#projects{background:var(--bg2);}
+.projects-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
+  gap:1px;background:var(--border2);
+  border:1px solid var(--border2);
+}
+.project-card{
+  background:var(--panel);
+  padding:0;overflow:hidden;
+  display:flex;flex-direction:column;
+  transition:background 0.25s;
+  position:relative;
+}
+.project-card:hover{background:var(--bg3);}
+.project-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--teal),transparent);
+  opacity:0;transition:opacity 0.3s;
+}
+.project-card:hover::before{opacity:1;}
+
+.pc-thumb{
+  height:180px;
+  background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  font-size:3.5rem;border-bottom:1px solid var(--border2);
+  position:relative;overflow:hidden;
+}
+.pc-thumb::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 50%,var(--teal-dim),transparent 70%);
+  opacity:0;transition:opacity 0.3s;
+}
+.project-card:hover .pc-thumb::before{opacity:1;}
+.pc-tag{
+  position:absolute;top:0.75rem;right:0.75rem;
+  font-family:var(--ff-mono);font-size:0.58rem;letter-spacing:0.1em;
+  text-transform:uppercase;background:var(--teal-dim);border:1px solid var(--border);
+  color:var(--teal);padding:0.2rem 0.5rem;
+}
+.pc-body{padding:1.5rem;flex:1;display:flex;flex-direction:column;}
+.pc-type{
+  font-family:var(--ff-mono);font-size:0.62rem;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--teal);margin-bottom:0.5rem;
+}
+.pc-title{
+  font-family:var(--ff-mono);font-size:1rem;font-weight:600;
+  color:var(--white);margin-bottom:0.75rem;line-height:1.3;
+}
+.pc-desc{
+  font-size:0.83rem;color:var(--text-muted);flex:1;
+  margin-bottom:1.25rem;line-height:1.7;font-weight:300;
+}
+.pc-tags{display:flex;flex-wrap:wrap;gap:0.35rem;margin-bottom:1.25rem;}
+.pc-tag-sm{
+  font-family:var(--ff-mono);font-size:0.58rem;letter-spacing:0.06em;
+  border:1px solid var(--border2);color:var(--text-muted);
+  padding:0.18rem 0.5rem;transition:border-color 0.2s,color 0.2s;
+}
+.pc-tag-sm:hover{border-color:var(--teal);color:var(--teal);}
+.pc-links{display:flex;gap:0.5rem;}
+.pc-link{
+  flex:1;text-align:center;
+  font-family:var(--ff-mono);font-size:0.65rem;letter-spacing:0.08em;
+  text-transform:uppercase;padding:0.55rem 0.5rem;
+  border:1px solid var(--border2);color:var(--text-muted);
+  transition:border-color 0.2s,color 0.2s,background 0.2s;
+  display:flex;align-items:center;justify-content:center;gap:0.3rem;
+}
+.pc-link:hover{border-color:var(--teal);color:var(--teal);}
+.pc-link.primary{
+  background:var(--teal-dim);border-color:var(--teal);color:var(--teal);
+}
+.pc-link.primary:hover{background:var(--teal);color:var(--bg);}
+
+/* ========== RESUME ========== */
+#resume{background:var(--bg);}
+.resume-layout{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:4rem;align-items:start;
+}
+.resume-download-box{
+  border:1px solid var(--border);
+  padding:2.5rem;background:var(--panel);
+  position:relative;
+}
+.resume-download-box::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--teal),var(--amber));
+}
+.rdl{font-family:var(--ff-mono);font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--teal);margin-bottom:1rem;}
+.rdtitle{font-family:var(--ff-display);font-size:2.5rem;letter-spacing:0.06em;color:var(--white);margin-bottom:0.75rem;}
+.rddesc{font-size:0.83rem;color:var(--text-muted);line-height:1.7;margin-bottom:2rem;font-weight:300;}
+.rd-pills{display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:2rem;}
+.rd-pill{
+  font-family:var(--ff-mono);font-size:0.6rem;letter-spacing:0.08em;
+  border:1px solid var(--border2);color:var(--text-muted);padding:0.25rem 0.6rem;
+}
+
+.timeline{display:flex;flex-direction:column;gap:0;}
+.tl-entry{
+  display:grid;grid-template-columns:120px 1fr;
+  gap:1.5rem;padding:1.5rem 0;
+  border-bottom:1px solid var(--border2);
+  position:relative;
+}
+.tl-entry:last-child{border-bottom:none;}
+.tl-entry::before{
+  content:'';position:absolute;left:119px;top:0;bottom:0;
+  width:1px;background:var(--border2);
+}
+.tl-dot{
+  position:absolute;left:113px;top:1.75rem;
+  width:13px;height:13px;border:2px solid var(--teal);
+  background:var(--bg);transform:rotate(45deg);
+  box-shadow:0 0 8px var(--teal-glow);
+}
+.tl-year{
+  font-family:var(--ff-mono);font-size:0.68rem;
+  color:var(--teal);padding-top:0.15rem;
+}
+.tl-company{
+  font-family:var(--ff-mono);font-size:0.6rem;
+  color:var(--text-dim);margin-top:0.15rem;
+}
+.tl-role{font-weight:600;font-size:0.9rem;color:var(--white);margin-bottom:0.3rem;}
+.tl-where{font-size:0.78rem;color:var(--text-muted);font-family:var(--ff-mono);}
+
+/* ========== BLOG ========== */
+#blog{background:var(--bg2);}
+.blog-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:1px;background:var(--border2);border:1px solid var(--border2);
+}
+.blog-card{
+  background:var(--panel);padding:2rem;
+  display:flex;flex-direction:column;
+  transition:background 0.25s;cursor:pointer;
+  position:relative;overflow:hidden;
+}
+.blog-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--teal),var(--amber));
+  transform:scaleX(0);transform-origin:left;transition:transform 0.3s var(--ease);
+}
+.blog-card:hover{background:var(--bg3);}
+.blog-card:hover::after{transform:scaleX(1);}
+.blog-cat{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  font-family:var(--ff-mono);font-size:0.62rem;letter-spacing:0.1em;
+  text-transform:uppercase;margin-bottom:1rem;
+}
+.blog-cat.cat-automation{color:var(--teal);}
+.blog-cat.cat-strategy{color:var(--amber);}
+.blog-cat.cat-tools{color:var(--green);}
+.blog-cat.cat-career{color:#A78BFA;}
+.blog-cat::before{content:'//';opacity:0.5;}
+.blog-title{
+  font-family:var(--ff-mono);font-size:0.95rem;font-weight:600;
+  color:var(--white);line-height:1.4;margin-bottom:0.75rem;
+  flex:1;
+}
+.blog-excerpt{
+  font-size:0.8rem;color:var(--text-muted);line-height:1.7;
+  margin-bottom:1.25rem;font-weight:300;
+}
+.blog-footer{
+  display:flex;justify-content:space-between;align-items:center;
+  border-top:1px solid var(--border2);padding-top:1rem;
+}
+.blog-date{font-family:var(--ff-mono);font-size:0.62rem;color:var(--text-dim);}
+.blog-read{
+  font-family:var(--ff-mono);font-size:0.62rem;color:var(--teal);
+  display:flex;align-items:center;gap:0.3rem;transition:gap 0.2s;
+}
+.blog-card:hover .blog-read{gap:0.6rem;}
+
+/* ========== CONTACT ========== */
+#contact{background:var(--bg);}
+.contact-grid{
+  display:grid;grid-template-columns:1fr 1.2fr;
+  gap:4rem;align-items:start;
+}
+.contact-info-label{
+  font-family:var(--ff-mono);font-size:0.65rem;letter-spacing:0.15em;
+  text-transform:uppercase;color:var(--teal);margin-bottom:0.75rem;
+}
+.contact-info-desc{
+  font-size:0.9rem;color:var(--text-muted);line-height:1.75;
+  margin-bottom:2rem;font-weight:300;
+}
+.contact-links{display:flex;flex-direction:column;gap:0;border:1px solid var(--border2);}
+.contact-link{
+  display:flex;align-items:center;gap:1rem;
+  padding:1rem 1.25rem;border-bottom:1px solid var(--border2);
+  transition:background 0.2s,transform 0.2s;
+}
+.contact-link:last-child{border-bottom:none;}
+.contact-link:hover{background:var(--teal-dim);transform:translateX(4px);}
+.cl-icon{
+  width:36px;height:36px;background:var(--teal-dim);
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;
+}
+.cl-text{}
+.cl-label{font-family:var(--ff-mono);font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);margin-bottom:0.15rem;}
+.cl-value{font-family:var(--ff-mono);font-size:0.78rem;color:var(--text);}
+.cl-arrow{margin-left:auto;color:var(--text-dim);font-family:var(--ff-mono);font-size:0.8rem;transition:color 0.2s;}
+.contact-link:hover .cl-arrow{color:var(--teal);}
+
+/* Contact Form */
+.contact-form{border:1px solid var(--border2);background:var(--panel);}
+.form-header{
+  padding:1rem 1.5rem;background:var(--teal-dim);
+  border-bottom:1px solid var(--border);
+  font-family:var(--ff-mono);font-size:0.7rem;
+  color:var(--teal);letter-spacing:0.1em;display:flex;align-items:center;gap:0.5rem;
+}
+.form-header::before{content:'>_';opacity:0.5;}
+.form-body{padding:1.5rem;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.field{margin-bottom:1rem;}
+.field label{
+  display:block;font-family:var(--ff-mono);font-size:0.62rem;
+  letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);
+  margin-bottom:0.4rem;
+}
+.field input,.field textarea,.field select{
+  width:100%;background:var(--bg);border:1px solid var(--border2);
+  color:var(--text);font-family:var(--ff-mono);font-size:0.8rem;
+  padding:0.7rem 0.85rem;outline:none;resize:vertical;
+  transition:border-color 0.2s,box-shadow 0.2s;
+}
+.field input:focus,.field textarea:focus{
+  border-color:var(--teal);box-shadow:0 0 0 3px var(--teal-dim);
+}
+.field input::placeholder,.field textarea::placeholder{color:var(--text-dim);}
+.field textarea{min-height:100px;}
+.form-submit{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:0.5rem;
+}
+.form-note{font-family:var(--ff-mono);font-size:0.62rem;color:var(--text-dim);}
+.form-success{
+  display:none;margin-top:1rem;padding:0.75rem 1rem;
+  background:rgba(16,185,129,0.1);border:1px solid var(--green);
+  font-family:var(--ff-mono);font-size:0.72rem;color:var(--green);
+}
+
+/* ========== FOOTER ========== */
+footer{
+  background:var(--bg2);border-top:1px solid var(--border2);
+  padding:2rem clamp(1rem,5vw,4rem);
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:1rem;
+}
+.footer-brand{
+  font-family:var(--ff-mono);font-size:0.75rem;color:var(--text-muted);
+  letter-spacing:0.08em;
+}
+.footer-brand span{color:var(--teal);}
+.footer-copy{font-family:var(--ff-mono);font-size:0.65rem;color:var(--text-dim);}
+.footer-links{display:flex;gap:1.5rem;}
+.footer-links a{
+  font-family:var(--ff-mono);font-size:0.65rem;letter-spacing:0.08em;
+  text-transform:uppercase;color:var(--text-dim);
+  transition:color 0.2s;
+}
+.footer-links a:hover{color:var(--teal);}
+
+/* ========== NOISE OVERLAY ========== */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity:0.018;
+}
+
+/* ========== RESPONSIVE ========== */
+@media(max-width:1024px){
+  .hero-inner{grid-template-columns:1fr;}
+  .hero-card{max-width:460px;}
+  .hero-metrics{max-width:460px;}
+  .about-grid{grid-template-columns:1fr;}
+  .about-portrait-wrap{display:none;}
+  .resume-layout{grid-template-columns:1fr;}
+  .contact-grid{grid-template-columns:1fr;}
+  .skill-bars-grid{grid-template-columns:1fr;}
+}
+@media(max-width:768px){
+  .nav-links,.nav-cta{display:none;}
+  .hamburger{display:flex;}
+  .projects-grid{grid-template-columns:1fr;}
+  .blog-grid{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
+  .skills-tabs{flex-direction:column;}
+  .tab-btn{text-align:left;border-right:none;border-bottom:1px solid var(--border2);}
+  footer{flex-direction:column;text-align:center;}
+  .footer-links{justify-content:center;}
+  .hero-metrics{grid-template-columns:1fr;}
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="profile">
-            <div class="profile_container">
-                <div class="profile_image">
-                     <img src="oussama-photo.jpg" alt="oussama el omari">
-                </div> 
-                <div>
-                    <h1 class="profile_name">
-                        <span class="profile_name_firstName">Oussama</span>
-                        <span class="profile_name_lastName">El Omari</span>
-                    </h1>
-                    <p class="profile_title">QA Engineer</p>
-                    <p class = description>
-                        I'm a Software QA Engineer committed to delivering reliable, high-quality software through thorough manual and automated testing. I collaborate closely with cross-functional teams to enhance testing workflows, resolve issues efficiently, and maintain a smooth, consistent user experience. I have successfully reduced regression defects by implementing more optimized test strategies and expanding automation coverage across critical product features.                
-                </div> 
-            </div>    
+
+<!-- AMBIENT BACKGROUND -->
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-glow-1" aria-hidden="true"></div>
+<div class="bg-glow-2" aria-hidden="true"></div>
+
+<!-- SCROLL PROGRESS -->
+<div id="progress-bar" aria-hidden="true"></div>
+
+<!-- ═══════════════════════════ NAVBAR ═══════════════════════════ -->
+<nav id="navbar" role="navigation" aria-label="Main navigation">
+  <div class="nav-brand">
+    <div class="nav-brand-icon" aria-hidden="true">OE</div>
+    <span class="nav-brand-name">Oussama<span>.El Omari</span></span>
+  </div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#resume">Resume</a>
+    <a href="#blog">QA Insights</a>
+    <a href="#contact">Contact</a>
+    <a href="oussama_resume.pdf" class="nav-cta" download>↓ CV</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+  <a href="#about" class="m-link">About</a>
+  <a href="#skills" class="m-link">Skills</a>
+  <a href="#projects" class="m-link">Projects</a>
+  <a href="#resume" class="m-link">Resume</a>
+  <a href="#blog" class="m-link">Blog</a>
+  <a href="#contact" class="m-link">Contact</a>
+</nav>
+
+<!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+<section id="home">
+  <div class="container">
+    <div class="hero-inner">
+
+      <div class="hero-content">
+        <div class="status-chip">
+          <span class="status-dot"></span>
+          Available for new opportunities
         </div>
-        <div class ="group-1">
-            <div class="skills">
-                <h3 class="title">Skills</h3>
-                <ul class="skills_list description">
-                    <li>Automation: JavaScript, Playwright, Typescript, Postman, Swagger, Git, Github, Visual Studio Code.</li>
-                    <li>Functional (regression, UAT, smoke, sanity), Non-functional (security, usability, performance, compatibility).</li>
-                    <li>Mobile Testing Tools: TestFlight.</li>
-                    <li>Web Technologies: HTML & CSS.</li>
-                    <li>Database: MySQL, PostgreSQL.</li>
-                    <li>Continuous Integration: GitHub Actions.</li>
-                    <li>Test Management: Jira, Zephyr Scale, Confluence, TestRail.</li>
-                    <li>Platforms: iOS, Android OS, Mac OS, Windows.</li>
-                    <li>Monitoring & Debugging Tools: Charles Proxy.</li>
-                </ul>
-            </div>
-            <div class="experience">
-                <h3 class="title">Experience</h3>
-                <h4 class="subtitle">QA Automation Engineer | Playball</h4>
-                <p class="date">January 2025 - Present</p>
-                <ul class="description">
-                    <li>Participate in all STLC phases for 3+ projects, creating and executing 150+ test cases that ensure requirements are clear, testable, and fully traceable.</li>
-                    <li>Review functional and technical documentation, identifying and resolving 30+ ambiguous requirements to reduce defects early in development.</li>
-                    <li>Log, track, and resolve 100+ defects in Jira, collaborating with developers to reproduce issues and improve release quality.</li>
-                    <li>Develop and maintain automated Playwright scripts, reducing regression testing time by 20% and increasing coverage across critical workflows.</li>
-                    <li>Execute SQL queries to validate backend data, support integration testing, and drive process improvements while meeting Agile sprint deadlines.</li>
-                </ul>
-                <h4 class="subtitle"> Manual QA | DelekHomes</h4>
-                <p class="date">January 2025 - Present</p>
-                <ul class="description">
-                    <li>Execute manual testing across web and mobile apps, validating 200+ API responses using Postman and inspecting traffic with Charles Proxy.</li>
-                    <li>Executed end-to-end functional and regression testing for web and mobile applications, identifying and documenting critical defects using detailed bug reports in Jira, ensuring high-quality releases and minimizing production issues.</li>
-                    <li>Designed and maintained comprehensive test cases and test plans based on requirements, user stories, and acceptance criteria, improving coverage and streamlining QA processes across multiple projects.</li>
-                    <li>Collaborated with cross-functional teams including developers, product managers, and UX designers to reproduce issues, provide actionable feedback, and validate fixes, contributing to faster release cycles and enhanced user experience.</li>
-                </ul>
-                <h4 class="subtitle">English Teacher | Ilke Okullari</h4>
-                <p class="date">September 2019 - July 2023</p>
-                <ul class="description">
-                    <li>Planned and implemented structured English lessons, demonstrating strong documentation and organisational skills.</li>
-                    <li>Monitored performance and analysed patterns to identify issues and implement corrective actions.</li>
-                    <li>Explained complex concepts clearly, enhancing communication skills for reporting and collaboration.</li>
-                    <li>Designed assessments and provided feedback, ensuring accuracy and quality control.</li>
-                </ul>
-            </div>
+
+        <p class="hero-eyebrow">// QA Automation Engineer &amp; Manual QA Engineer</p>
+
+        <h1 class="hero-name">
+          Oussama<br>
+          <span class="line-accent">EL OMARI</span>
+        </h1>
+
+        <span class="hero-title-tag">Quality Assurance · Test Automation · CI/CD</span>
+
+        <p class="hero-desc">
+          I build <strong>robust test automation frameworks</strong> that ship confidence — transforming fragile manual processes into precision-engineered quality gates across web, API, and mobile platforms.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#projects" class="btn-primary">
+            <span>▶</span> View Projects
+          </a>
+          <a href="#contact" class="btn-secondary">
+            <span>◈</span> Get In Touch
+          </a>
         </div>
-        <div class="two-column-section">
-            <div class="column">
-                <h3 class="title"> Education</h3>
-                <h4 class="subtitle">Bachelor's Degree in English Studies | Sidi Mohammed Ben Abdellah University</h4>
-                <p class="date">September 2015 - June 2019</p>
-                <ul class="description">
-                    <li>Relevant Coursework: Advanced English Grammar, Phonetics and Phonology, Sociolinguistics, Psycholinguistics, Research Methods in Linguistics.</li>
-                </ul>
-                <h4 class="subtitle">High School Diploma | Lycée CEGEP</h4>
-                <p class="date">September 2012 - June 2015</p>
-                <ul class="description">
-                    <li>Economics Major.</li>
-                </ul>
-            </div>
-            <div class="column">
-                <h3 class="title"> Certifications / Languages</h3>
-                <h4 class="subtitle">Certifications</h4>
-                <ul class="description">
-                    <li>Certified Software Tester</li>
-                    <li>LambdaTest Test Automation Professional Certificate.</li>
-                    <li>Test Automation Foundations.</li>
-                    <li>Playwright Learning Essentials</li>
-                    <li>Agile Testing.</li>
-                </ul>
-                <h4 class="subtitle">Languages</h4>
-                <ul class="description">
-                    <li>Arabic: Native </li>
-                    <li>English: Native-like Proficiency</li>
-                    <li>French: Professional Proficiency</li>
-                    <li>Spanish: Intermediate Proficiency</li>
-                    <li>Turkish: Intermediate Proficiency</li>
-                </ul>
-            </div>
+
+        <div class="hero-metrics">
+          <div class="metric-item">
+            <div class="metric-num">5+</div>
+            <div class="metric-label">Yrs Experience</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-num">85%</div>
+            <div class="metric-label">Coverage Rate</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-num">30+</div>
+            <div class="metric-label">Projects Shipped</div>
+          </div>
         </div>
-        <hr>
-        <div class="group-2-two-column-section">
-            <div class="column">
-                <h3 class="title">Contact</h3>
-                <ul class="description">
-                    <p> Odenton, MD, USA </p>
-                    <p> +1(202)713-3971 </p>
-                    <p> oussama.elomariii@gmail.com</p>
-                </ul>
-            </div>
-            <div class="column">
-                <h3 class="title">Socials</h3>
-                <div class="social_items">
-                    <a href="https://github.com/oussama-qa" class="social_item">
-                        <i data-feather="github"></i>
-                        <span>Ousssama-qa</span>
-                    </a>
-                    <a href="https://www.linkedin.com/in/oussamaomari/" class="social_item">
-                        <i data-feather="linkedin"></i>
-                        <span>Ousssama El Omari</span>
-                    </a>
-                </div>
-            </div>
+      </div>
+
+      <!-- Profile Card -->
+      <div class="hero-card">
+        <div class="card-header">
+          <div class="card-dots">
+            <div class="card-dot cd-r"></div>
+            <div class="card-dot cd-y"></div>
+            <div class="card-dot cd-g"></div>
+          </div>
+          <span class="card-title-bar">qa_engineer_profile.json</span>
         </div>
+        <div class="card-body">
+    <div class="card-avatar" style="overflow:hidden;padding:0;width:72px;height:72px;border-radius:0;">
+        <img src="oussama_photo.jpg" alt="Oussama" style="width:100%;height:100%;object-fit:cover;object-position:center 15%;display:block;" />
+    </div>          
+          <div class="card-name">Oussama El Omari</div>
+          <div class="card-role">// QA Automation Engineer</div>
+          <div class="card-stats">
+            <div class="cs-row">
+              <span class="cs-key">automation_stack</span>
+              <span class="cs-val">Playwright + Javascript/Typescript</span>
+            </div>
+            <div class="cs-row">
+              <span class="cs-key">test_coverage</span>
+              <span class="cs-val">85.0%</span>
+            </div>
+            <div class="cs-row">
+              <span class="cs-key">ci_success_rate</span>
+              <span class="cs-val">99.1%</span>
+            </div>
+            <div class="cs-row">
+              <span class="cs-key">domain</span>
+              <span class="cs-val">SaaS</span>
+            </div>
+            <div class="cs-row">
+              <span class="cs-key">location</span>
+              <span class="cs-val">Odenton, MD — Remote</span>
+            </div>
+          </div>
+          <div class="card-tags">
+            <span class="ctag">ISTQB</span>
+            <span class="ctag">Playwright</span>
+            <span class="ctag">Cursor AI</span>
+            <span class="ctag">SQL</span>
+            <span class="ctag">CI/CD</span>
+            <span class="ctag">API Testing</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════ ABOUT ═══════════════════════════ -->
+<section id="about" class="section-pad">
+  <div class="container">
+
+    <div class="about-grid">
+      <!-- Portrait column -->
+      <div class="about-portrait-wrap reveal-left">
+        <div class="portrait-box" role="img" aria-label="Profile photo placeholder — replace with your photo">
+        <img src="oussama_photo.jpg" alt="Oussama" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;" />
+          <span class="portrait-corner corner-tl"></span>
+          <span class="portrait-corner corner-tr"></span>
+          <span class="portrait-corner corner-bl"></span>
+          <span class="portrait-corner corner-br"></span>
+        </div>
+        <!-- REPLACE with: <img src="oussama_photo.jpg" alt="Oussama El Omari" style="width:100%;aspect-ratio:3/4;object-fit:cover;border:1px solid var(--border);" /> -->
+
+        <div class="cert-strip">
+          <div class="cert-item">
+            <div class="cert-left">
+              <div class="cert-name">Master Test Automation with Playwright</div>
+              <div class="cert-org">LinkedIn</div>
+            </div>
+            <div class="cert-badge">✓ 2026</div>
+          </div>
+          <div class="cert-item">
+            <div class="cert-left">
+              <div class="cert-name">Agile Testing</div>
+              <div class="cert-org">LinkedIn</div>
+            </div>
+            <div class="cert-badge">✓ 2025</div>
+          </div>
+          <div class="cert-item">
+            <div class="cert-left">
+              <div class="cert-name">LambdaTest Test Automation </div>
+              <div class="cert-org">TestMu AI</div>
+            </div>
+            <div class="cert-badge">✓ 2025</div>
+          </div>
+          <div class="cert-item">
+            <div class="cert-left">
+              <div class="cert-name">Python Automation and Testing</div>
+              <div class="cert-org">NASBA</div>
+            </div>
+            <div class="cert-badge">✓ 2025</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Text column -->
+      <div class="reveal">
+        <span class="sec-label">About Me</span>
+        <h2 class="sec-title">BREAKING<br>THINGS<br>ON PURPOSE</h2>
+        <div class="about-text">
+          <p>I'm a <strong>QA  Automation Engineer with 5+ years</strong> of expertise designing and scaling test automation frameworks that give engineering teams the confidence to ship fast and ship right. My toolkit spans the full quality spectrum — from surgical exploratory testing to architecting CI-integrated Playwright ecosystem.</p>
+          <p>Across <strong>SaaS</strong> domain, I've embedded quality thinking at every stage of the SDLC — collaborating with developers, product owners, and DevOps engineers to catch issues before they become incidents.</p>
+
+          <div class="pull-quote">
+            <p>"The best QA engineers don't just find bugs — they prevent the conditions that cause them."</p>
+          </div>
+
+          <p>My philosophy is <strong>shift-left, data-driven, and automation-first</strong>. I measure quality in outcomes: reduced defect escape rates, faster release cycles, and engineering teams that trust their test suite enough to deploy on Fridays.</p>
+        </div>
+
+        <div class="fact-grid">
+          <div class="fact-item">
+            <div class="fact-num">40%</div>
+            <div class="fact-txt">Reduction in prod defects</div>
+          </div>
+          <div class="fact-item">
+            <div class="fact-num">85%</div>
+            <div class="fact-txt">Test Coverage Achieved</div>
+          </div>
+          <div class="fact-item">
+            <div class="fact-num">350+</div>
+            <div class="fact-txt">Automated Tests</div>
+          </div>
+          <div class="fact-item">
+            <div class="fact-num">5yrs</div>
+            <div class="fact-txt">QA experience</div>
+          </div>
+        </div>
+        <div style="margin-top:1.5rem;border:1px solid var(--border2);padding:1rem 1.2rem;background:var(--teal-dim);">
+  <div style="font-family:var(--ff-mono);font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--teal);margin-bottom:0.6rem;">// Languages</div>
+  <div style="font-family:var(--ff-mono);font-size:0.78rem;color:var(--text);">
+    English &nbsp;·&nbsp; Arabic &nbsp;·&nbsp; French &nbsp;·&nbsp; Turkish &nbsp;·&nbsp; Spanish
+  </div>
+  <div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.4rem;">Fluent across all five — with hands-on experience in localization testing.</div>
+</div>
+      </div>
     </div>
 
-    <script>
-      feather.replace();
-    </script>
+  </div>
+</section>
 
+<div class="divider"></div>
+
+<!-- ═══════════════════════════ SKILLS ═══════════════════════════ -->
+<section id="skills" class="section-pad">
+  <div class="container">
+    <div class="reveal">
+      <span class="sec-label">Technical Skills</span>
+      <h2 class="sec-title">PRECISION<br>STACK</h2>
+      <p class="sec-sub" style="margin-bottom:3rem;">Five years of deliberate practice across the full quality engineering spectrum — from manual exploratory to distributed automation pipelines.</p>
+    </div>
+
+    <div class="skills-tabs reveal">
+      <button class="tab-btn active" data-tab="tab-automation">Web Automation</button>
+      <button class="tab-btn" data-tab="tab-manual">Manual Testing</button>
+      <button class="tab-btn" data-tab="tab-api">API &amp; Performance</button>
+      <button class="tab-btn" data-tab="tab-devops">DevOps &amp; CI/CD</button>
+      <button class="tab-btn" data-tab="tab-tools">Tools &amp; Platforms</button>
+    </div>
+
+    <!-- Tab: Web Automation -->
+    <div class="skill-panel active" id="tab-automation">
+      <div class="skill-bars-grid reveal">
+        <div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span class="skill-bar-name">Playwright (Javascript / Typescript)</span><span class="skill-bar-pct">90%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-w="90"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span class="skill-bar-name">Selenium WebDriver </span><span class="skill-bar-pct">80%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-w="80"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span class="skill-bar-name">Cypress</span><span class="skill-bar-pct">71%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-w="71"></div></div>
+          </div>
+        </div>
+        <div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span class="skill-bar-name">Page Object Model (POM)</span><span class="skill-bar-pct">98%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-w="98"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span class="skill-bar-name">Playwright Fixtures</span><span class="skill-bar-pct">90%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-w="90"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span class="skill-bar-name">Cucumber / BDD / Gherkin</span><span class="skill-bar-pct">80%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-w="80"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Manual Testing -->
+    <div class="skill-panel" id="tab-manual">
+      <div class="skill-bars-grid reveal">
+        <div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span class="skill-bar-name">Boundary Value Analysis &amp; EP</span><span class="skill-bar-pct">98%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill amber" data-w="98"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span class="skill-bar-name">Exploratory &amp; Session-Based Testing</span><span class="skill-bar-pct">95%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill amber" data-w="95"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span class="skill-bar-name">Risk-Based Testing Strategy</span><span class="skill-bar-pct">92%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill amber" data-w="92"></div></div>
+          </div>
+        </div>
+        <div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span class="skill-bar-name">Regression &amp; Smoke Testing</span><span class="skill-bar-pct">97%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill amber" data-w="97"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span class="skill-bar-name">Decision Table Testing</span><span class="skill-bar-pct">93%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill amber" data-w="93"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span class="skill-bar-name">Test Case Design &amp; Management</span><span class="skill-bar-pct">96%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill amber" data-w="96"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: API & Performance -->
+    <div class="skill-panel" id="tab-api">
+      <div class="skill-bars-grid reveal">
+        <div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span class="skill-bar-name">Playwright API Automation</span><span class="skill-bar-pct">94%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill green" data-w="94"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span class="skill-bar-name">Postman</span><span class="skill-bar-pct">96%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill green" data-w="96"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span class="skill-bar-name">Swagger UI / OpenAPI</span><span class="skill-bar-pct">78%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill green" data-w="78"></div></div>
+          </div>
+        </div>
+        <div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span class="skill-bar-name">JMeter</span><span class="skill-bar-pct">87%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill green" data-w="87"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span class="skill-bar-name">k6 Load Testing</span><span class="skill-bar-pct">80%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill green" data-w="80"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span class="skill-bar-name">JSON Schema Validation</span><span class="skill-bar-pct">93%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill green" data-w="93"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: DevOps & CI/CD -->
+    <div class="skill-panel" id="tab-devops">
+      <div class="skill-bars-grid reveal">
+        <div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span class="skill-bar-name">GitHub Actions</span><span class="skill-bar-pct">93%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-w="93"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span class="skill-bar-name">Docker (containerized tests)</span><span class="skill-bar-pct">83%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-w="83"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span class="skill-bar-name">GitLab CI/CD</span><span class="skill-bar-pct">80%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-w="80"></div></div>
+          </div>
+        </div>
+        <div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span class="skill-bar-name">Git / Version Control</span><span class="skill-bar-pct">96%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-w="96"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span class="skill-bar-name">AWS (S3, Lambda, CloudWatch)</span><span class="skill-bar-pct">74%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-w="74"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span class="skill-bar-name">GitHub Secrets</span><span class="skill-bar-pct">77%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" data-w="77"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Tools -->
+    <div class="skill-panel" id="tab-tools">
+      <div class="tools-grid reveal">
+        <div class="tool-cell"><div class="tool-icon">🔵</div><div class="tool-name">Jira</div></div>
+        <div class="tool-cell"><div class="tool-icon">📋</div><div class="tool-name">TestRail</div></div>
+        <div class="tool-cell"><div class="tool-icon">📮</div><div class="tool-name">Postman</div></div>
+        <div class="tool-cell"><div class="tool-icon">🎭</div><div class="tool-name">Playwright</div></div>
+        <div class="tool-cell"><div class="tool-icon">🌲</div><div class="tool-name">Cypress</div></div>
+        <div class="tool-cell"><div class="tool-icon">📱</div><div class="tool-name">Cursor AI</div></div>
+        <div class="tool-cell"><div class="tool-icon">⚡</div><div class="tool-name">TestNG</div></div>
+        <div class="tool-cell"><div class="tool-icon">🥒</div><div class="tool-name">Cucumber</div></div>
+        <div class="tool-cell"><div class="tool-icon">🔥</div><div class="tool-name">JMeter</div></div>
+        <div class="tool-cell"><div class="tool-icon">📊</div><div class="tool-name">Allure</div></div>
+        <div class="tool-cell"><div class="tool-icon">🐳</div><div class="tool-name">Docker</div></div>
+        <div class="tool-cell"><div class="tool-icon">🔧</div><div class="tool-name">Jenkins</div></div>
+        <div class="tool-cell"><div class="tool-icon">🐙</div><div class="tool-name">GitHub</div></div>
+        <div class="tool-cell"><div class="tool-icon">☁️</div><div class="tool-name">AWS</div></div>
+        <div class="tool-cell"><div class="tool-icon">🔍</div><div class="tool-name">Charles Proxy</div></div>
+        <div class="tool-cell"><div class="tool-icon">🟠</div><div class="tool-name">GitLab</div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════ PROJECTS ═══════════════════════════ -->
+<section id="projects" class="section-pad">
+  <div class="container">
+    <div class="reveal">
+      <span class="sec-label">Projects</span>
+      <h2 class="sec-title">PRODUCTION<br>GRADE<br>WORK</h2>
+      <p class="sec-sub" style="margin-bottom:3rem;">Open-source frameworks, automation suites, and QA tooling shipped and battle-tested in real environments.</p>
+    </div>
+
+    <div class="projects-grid">
+
+      <!-- Project 1 -->
+      <div class="project-card reveal">
+        <div class="pc-thumb">🎭<div class="pc-tag">Featured</div></div>
+        <div class="pc-body">
+          <div class="pc-type">// Web + API Automation Framework</div>
+          <div class="pc-title">E-Commerce Playwright Suite</div>
+          <p class="pc-desc">Cross-browser Playwright + TypeScript suite for automationexercise.com — 16 UI tests (Chromium / Firefox / WebKit) and 9 API tests against the public endpoints. POM architecture with typed fixtures, storageState auth reuse, tagged test runs (@smoke / @regression / @api), and a sharded GitHub Actions matrix (one runner per browser + typecheck gate).</p>
+          <div class="pc-tags">
+            <span class="pc-tag-sm">Playwright</span>
+            <span class="pc-tag-sm">TypeScript</span>
+            <span class="pc-tag-sm">API Testing</span>
+            <span class="pc-tag-sm">Cross-Browser</span>
+            <span class="pc-tag-sm">GitHub Actions</span>
+            <span class="pc-tag-sm">POM</span>
+          </div>
+          <div class="pc-links">
+            <a href="https://github.com/oussama-qa/E-Comerce-Automation-Project" target="_blank" rel="noopener" class="pc-link primary">↗ GitHub</a>
+            <a href="https://github.com/oussama-qa/E-Comerce-Automation-Project#readme" target="_blank" rel="noopener" class="pc-link">📄 README</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="project-card reveal delay-1">
+        <div class="pc-thumb">🔌</div>
+        <div class="pc-body">
+          <div class="pc-type">// API Testing</div>
+          <div class="pc-title">API Validation</div>
+          <p class="pc-desc">Postmanframework for API Validation— covering OAuth2, CRUD, JSON schema validation, and comprehensive negative testing. Jenkins-integrated with a custom HTML reporting layer and test data factories.</p>
+          <div class="pc-tags">
+            <span class="pc-tag-sm">Postman</span>
+            <span class="pc-tag-sm">Response Validation</span>
+            <span class="pc-tag-sm">Playwright API automation</span>
+            <span class="pc-tag-sm">Negative Testing</span>
+            <span class="pc-tag-sm">JSON Schema</span>
+          </div>
+          <div class="pc-links">
+            <a href="https://github.com/oussama-qa/banking-api-tests" target="_blank" rel="noopener" class="pc-link primary">↗ GitHub</a>
+            <a href="#" class="pc-link">📄 Case Study</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 3
+      <div class="project-card reveal delay-2">
+        <div class="pc-thumb">🥒</div>
+        <div class="pc-body">
+          <div class="pc-type">// BDD Framework</div>
+          <div class="pc-title">Healthcare Portal BDD Suite</div>
+          <p class="pc-desc">Behavior-driven Selenium + Cucumber + Java framework for a patient management portal. Gherkin feature files co-authored with product owners. Produces living documentation via Allure and runs on a self-hosted GitLab CI runner.</p>
+          <div class="pc-tags">
+            <span class="pc-tag-sm">Cucumber</span>
+            <span class="pc-tag-sm">Selenium</span>
+            <span class="pc-tag-sm">Java</span>
+            <span class="pc-tag-sm">Gherkin</span>
+            <span class="pc-tag-sm">GitLab CI</span>
+          </div>
+          <div class="pc-links">
+            <a href="https://github.com/alexrivera/healthcare-bdd" target="_blank" rel="noopener" class="pc-link primary">↗ GitHub</a>
+            <a href="#" class="pc-link">📄 Case Study</a>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- Project 4
+      <div class="project-card reveal delay-1">
+        <div class="pc-thumb">📱</div>
+        <div class="pc-body">
+          <div class="pc-type">// Mobile Automation</div>
+          <div class="pc-title">Cross-Platform Appium Suite</div>
+          <p class="pc-desc">iOS + Android automation using Appium + Java with BrowserStack real-device execution. Parallel test runs via TestNG data providers, with reusable gesture libraries and visual baseline diffing for UI regression catches.</p>
+          <div class="pc-tags">
+            <span class="pc-tag-sm">Appium</span>
+            <span class="pc-tag-sm">Java</span>
+            <span class="pc-tag-sm">BrowserStack</span>
+            <span class="pc-tag-sm">iOS</span>
+            <span class="pc-tag-sm">Android</span>
+          </div>
+          <div class="pc-links">
+            <a href="https://github.com/alexrivera/appium-mobile-suite" target="_blank" rel="noopener" class="pc-link primary">↗ GitHub</a>
+            <a href="#" class="pc-link">📄 Case Study</a>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- Project 5
+      <div class="project-card reveal delay-2">
+        <div class="pc-thumb">🔥</div>
+        <div class="pc-body">
+          <div class="pc-type">// Performance Testing</div>
+          <div class="pc-title">JMeter Distributed Load Suite</div>
+          <p class="pc-desc">Distributed performance testing for a 10,000 concurrent user SaaS product. Spike, soak, and stress scenarios with real-time Grafana dashboards via InfluxDB integration. Automated threshold alerts trigger Jenkins rollback pipelines.</p>
+          <div class="pc-tags">
+            <span class="pc-tag-sm">JMeter</span>
+            <span class="pc-tag-sm">Grafana</span>
+            <span class="pc-tag-sm">InfluxDB</span>
+            <span class="pc-tag-sm">AWS EC2</span>
+          </div>
+          <div class="pc-links">
+            <a href="https://github.com/alexrivera/jmeter-load-suite" target="_blank" rel="noopener" class="pc-link primary">↗ GitHub</a>
+            <a href="#" class="pc-link">📄 Docs</a>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- Project 6 -->
+      <div class="project-card reveal delay-3">
+        <div class="pc-thumb">🔧</div>
+        <div class="pc-body">
+          <div class="pc-type">// Open Source</div>
+          <div class="pc-title">QA CI/CD Pipeline</div>
+          <p class="pc-desc">Production-ready template integrating Playwright into GitHub Actions and Jenkins — with Allure reporting, Slack notifications, S3 artifact upload, and Docker parallelization built in. Used by 200+ teams as their QA pipeline foundation.</p>
+          <div class="pc-tags">
+            <span class="pc-tag-sm">GitHub Actions</span>
+            <span class="pc-tag-sm">Jenkins</span>
+            <span class="pc-tag-sm">Docker</span>
+            <span class="pc-tag-sm">Playwright</span>
+            <span class="pc-tag-sm">AWS</span>
+          </div>
+          <div class="pc-links">
+            <a href="https://github.com/.........../qa-pipeline-boilerplate" target="_blank" rel="noopener" class="pc-link primary">↗ GitHub</a>
+            <a href="#" class="pc-link">📖 Wiki</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════ RESUME ═══════════════════════════ -->
+<section id="resume" class="section-pad">
+  <div class="container">
+    <div class="reveal">
+      <span class="sec-label">Resume</span>
+      <h2 class="sec-title">FIVE<br>YEARS OF<br>QUALITY</h2>
+    </div>
+
+    <div class="resume-layout">
+
+      <div class="resume-download-box reveal">
+        <p class="rdl">// Download</p>
+        <h3 class="rdtitle">FULL RESUME</h3>
+        <p class="rddesc">Complete work history, technical skills inventory, certifications, education! — formatted for ATS and human eyes.</p>
+        <div class="rd-pills">
+          <span class="rd-pill">PDF Format</span>
+          <span class="rd-pill">Updated Apr 2026</span>
+          <span class="rd-pill">ATS Optimized</span>
+          <span class="rd-pill">1 Page</span>
+        </div>
+        <a href="oussama_resume.pdf" download class="btn-primary" style="display:inline-flex;margin-top:0.5rem;">
+          ↓ Download Resume PDF
+        </a>
+        <div style="margin-top:2rem;border-top:1px solid var(--border2);padding-top:1.5rem;">
+          <p style="font-family:var(--ff-mono);font-size:0.65rem;color:var(--text-muted);letter-spacing:0.08em;margin-bottom:1rem;">// EDUCATION</p>
+          <div style="font-size:0.88rem;font-weight:600;color:var(--text);margin-bottom:0.2rem;">B.A. English Studies-Linguistics</div>
+          <div style="font-family:var(--ff-mono);font-size:0.7rem;color:var(--teal);">Fez, Morocco — USMBA — 2019</div>
+        </div>
+      </div>
+
+      <!-- Timeline -->
+      <div class="reveal reveal-right delay-1">
+        <p class="rdl" style="margin-bottom:2rem;">// Work History</p>
+        <div class="timeline">
+          <div class="tl-entry">
+            <div class="tl-dot"></div>
+            <div>
+              <div class="tl-year">2022 – Present</div>
+              <div class="tl-company">Sportendo</div>
+            </div>
+            <div>
+              <div class="tl-role">QA Automation Engineer</div>
+              <div class="tl-where">Remote</div>
+            </div>
+          </div>
+          <div class="tl-entry">
+            <div class="tl-dot"></div>
+            <div>
+              <div class="tl-year">2020 – 2022</div>
+              <div class="tl-company">Reali</div>
+            </div>
+            <div>
+              <div class="tl-role">Manual QA Engineer</div>
+              <div class="tl-where">Remote</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════ BLOG ═══════════════════════════ -->
+<section id="blog" class="section-pad">
+  <div class="container">
+    <div class="reveal">
+      <span class="sec-label">Recommended Reading</span>
+      <h2 class="sec-title">QA<br>FIELD<br>NOTES</h2>
+      <p class="sec-sub" style="margin-bottom:3rem;">Handpicked articles from QA professionals covering automation, strategy, and the evolving craft of quality engineering.</p>
+    </div>
+
+    <div class="blog-grid">
+
+      <a href="https://medium.com/@lakindudesilva007/playwright-vs-cypress-vs-selenium-choosing-the-right-test-automation-tool-in-2025-9e2093d1b2de" target="_blank" rel="noopener" class="blog-card reveal" style="text-decoration:none;">
+        <div class="blog-cat cat-automation">Automation</div>
+        <div class="blog-title">Playwright vs Cypress vs Selenium: Choosing the Right Tool in 2025</div>
+        <div class="blog-excerpt">A real-world comparison of the three dominant automation frameworks using concrete criteria — performance, stability, and modern architecture — not marketing claims.</div>
+        <div class="blog-footer">
+          <span class="blog-date">Lakindu De Silva · Medium</span>
+          <span class="blog-read">Read <span>→</span></span>
+        </div>
+      </a>
+
+      <a href="https://qainsightsblog.wordpress.com/2024/05/02/automation-best-practices-for-full-ci-cd-and-shift-left-testing/" target="_blank" rel="noopener" class="blog-card reveal delay-1" style="text-decoration:none;">
+        <div class="blog-cat cat-strategy">Strategy</div>
+        <div class="blog-title">Building a Shift-Left Culture with Full CI/CD Integration</div>
+        <div class="blog-excerpt">Shift-left is more than testing early — it's about shifting quality ownership across every engineer. A practical breakdown of automation best practices inside CI/CD pipelines.</div>
+        <div class="blog-footer">
+          <span class="blog-date">QA Insights Blog · 2024</span>
+          <span class="blog-read">Read <span>→</span></span>
+        </div>
+      </a>
+
+      <a href="https://www.browserstack.com/guide/automation-testing-trends" target="_blank" rel="noopener" class="blog-card reveal delay-2" style="text-decoration:none;">
+        <div class="blog-cat cat-tools">Trends</div>
+        <div class="blog-title">Test Automation Trends in 2025: What QA Teams Need to Know</div>
+        <div class="blog-excerpt">BrowserStack's deep-dive into how QA roles are shifting from gatekeepers to pipeline architects — and how AI, shift-left, and QAOps are reshaping modern testing.</div>
+        <div class="blog-footer">
+          <span class="blog-date">BrowserStack · 2025</span>
+          <span class="blog-read">Read <span>→</span></span>
+        </div>
+      </a>
+
+      <a href="https://medium.com/@bluudit/selenium-vs-playwright-which-automation-tool-should-qa-engineers-learn-in-2026-661255bfc462" target="_blank" rel="noopener" class="blog-card reveal delay-1" style="text-decoration:none;">
+        <div class="blog-cat cat-tools">Career</div>
+        <div class="blog-title">Selenium vs Playwright: Which Tool Should QA Engineers Learn in 2026?</div>
+        <div class="blog-excerpt">An honest look at where both tools stand in 2026, what the job market is actually saying, and how to make a career decision you won't regret a year from now.</div>
+        <div class="blog-footer">
+          <span class="blog-date">Vijay Kumar Maurya · Medium</span>
+          <span class="blog-read">Read <span>→</span></span>
+        </div>
+      </a>
+
+      <a href="https://www.netguru.com/blog/qa-best-practices" target="_blank" rel="noopener" class="blog-card reveal delay-2" style="text-decoration:none;">
+        <div class="blog-cat cat-career">Best Practices</div>
+        <div class="blog-title">10 Best Practices in Software QA for 2025</div>
+        <div class="blog-excerpt">From AI-assisted test generation to shift-left implementation — a comprehensive guide to the practices that separate high-performing QA teams from the rest.</div>
+        <div class="blog-footer">
+          <span class="blog-date">Netguru · 2025</span>
+          <span class="blog-read">Read <span>→</span></span>
+        </div>
+      </a>
+
+      <a href="https://talent500.com/blog/qa-automation-trends-2025-2026/" target="_blank" rel="noopener" class="blog-card reveal delay-3" style="text-decoration:none;">
+        <div class="blog-cat cat-automation">Automation</div>
+        <div class="blog-title">Key QA Automation Trends for 2025–26: How Testing Is Changing</div>
+        <div class="blog-excerpt">Playwright's rise, AI-driven test generation, and shift-right strategies — a forward-looking analysis of how automation is evolving and what QA engineers must adapt to.</div>
+        <div class="blog-footer">
+          <span class="blog-date">Talent500 · 2025</span>
+          <span class="blog-read">Read <span>→</span></span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════ CONTACT ═══════════════════════════ -->
+<section id="contact" class="section-pad">
+  <div class="container">
+    <div class="reveal">
+      <span class="sec-label">Contact</span>
+      <h2 class="sec-title">LET'S BUILD<br>QUALITY<br>TOGETHER</h2>
+    </div>
+
+    <div class="contact-grid">
+
+      <!-- Contact info -->
+      <div class="reveal">
+        <p class="contact-info-label">// Get in touch</p>
+        <p class="contact-info-desc">Ready to bring quality to your team! Open to <strong style="color:var(--text)">QA roles</strong>, consulting, and contract automation projects. I reply within 24 hours — usually faster.</p>
+
+        <div class="contact-links">
+          <a href="mailto:Oussama.elomariii@gmail.com" class="contact-link">
+            <div class="cl-icon">✉️</div>
+            <div class="cl-text">
+              <div class="cl-label">Email</div>
+              <div class="cl-value">Oussama.elomariii@gmail.com</div>
+            </div>
+            <div class="cl-arrow">→</div>
+          </a>
+          <a href="https://linkedin.com/in/oussamaomari" target="_blank" rel="noopener" class="contact-link">
+            <div class="cl-icon">💼</div>
+            <div class="cl-text">
+              <div class="cl-label">LinkedIn</div>
+              <div class="cl-value"> linkedin.com/in/oussamaomari</div>
+            </div>
+            <div class="cl-arrow">→</div>
+          </a>
+          <a href="https://github.com/oussama-qa" target="_blank" rel="noopener" class="contact-link">
+            <div class="cl-icon">🐙</div>
+            <div class="cl-text">
+              <div class="cl-label">GitHub</div>
+              <div class="cl-value">github.com/oussama-qa</div>
+            </div>
+            <div class="cl-arrow">→</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="contact-form reveal delay-2">
+        <div class="form-header">Send a Message</div>
+        <div class="form-body">
+          <div class="form-row">
+            <div class="field">
+              <label>First Name</label>
+              <input type="text" placeholder="Jane" />
+            </div>
+            <div class="field">
+              <label>Last Name</label>
+              <input type="text" placeholder="Smith" />
+            </div>
+          </div>
+          <div class="field">
+            <label>Email Address</label>
+            <input type="email" placeholder="jane@company.com" />
+          </div>
+          <div class="field">
+            <label>Subject</label>
+            <input type="text" placeholder="QA Consulting Inquiry / Senior QA Role" />
+          </div>
+          <div class="field">
+            <label>Message</label>
+            <textarea placeholder="Tell me about your project, team size, stack, and what quality challenges you're facing..." rows="4"></textarea>
+          </div>
+          <div class="form-submit">
+            <span class="form-note">// 24hr response</span>
+            <button class="btn-primary" id="form-submit-btn" onclick="handleFormSubmit(event)">
+              Send Message ▶
+            </button>
+          </div>
+          <div class="form-success" id="form-success">
+            ✓ TRANSMISSION RECEIVED — I'll respond within 24 hours.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <div class="footer-brand"><span>OE</span> // Oussama El Omari</div>
+  <div class="footer-copy">© 2025 Oussama El Omari · Quality is not a phase. It's a discipline.</div>
+  <div class="footer-links">
+    <a href="https://github.com/oussama-qa" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://linkedin.com/in/oussamaomari" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="resume.pdf" download>Resume</a>
+    <a href="#home">↑ Top</a>
+  </div>
+</footer>
+
+<!-- ===================================
+     JAVASCRIPT
+     =================================== -->
+<script>
+/* ── Scroll Progress Bar ─── */
+const progressBar = document.getElementById('progress-bar');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  progressBar.style.width = (h > 0 ? (scrollY / h) * 100 : 0) + '%';
+}, { passive: true });
+
+/* ── Navbar stuck state ─── */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('stuck', scrollY > 40);
+}, { passive: true });
+
+/* ── Active nav link ─── */
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+    }
+  });
+}, { threshold: 0.4 });
+sections.forEach(s => observer.observe(s));
+
+/* ── Hamburger / Mobile Nav ─── */
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobile-nav');
+hamburger.addEventListener('click', () => {
+  const open = hamburger.classList.toggle('open');
+  mobileNav.classList.toggle('open', open);
+  hamburger.setAttribute('aria-expanded', open);
+});
+document.querySelectorAll('.m-link').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileNav.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+  });
+});
+
+/* ── Scroll Reveal ─── */
+const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    entry.target.classList.add('visible');
+    // Animate bars inside
+    entry.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+      setTimeout(() => { bar.style.width = bar.dataset.w + '%'; }, 200);
+    });
+    revealObs.unobserve(entry.target);
+  });
+}, { threshold: 0.1 });
+revealEls.forEach(el => revealObs.observe(el));
+
+/* ── Skill Tabs ─── */
+const tabBtns = document.querySelectorAll('.tab-btn');
+const panels = document.querySelectorAll('.skill-panel');
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    tabBtns.forEach(b => b.classList.remove('active'));
+    panels.forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    const panel = document.getElementById(btn.dataset.tab);
+    if (!panel) return;
+    panel.classList.add('active');
+    // Reset and animate bars in newly shown panel
+    panel.querySelectorAll('.skill-bar-fill').forEach(bar => {
+      bar.style.width = '0%';
+      requestAnimationFrame(() => {
+        setTimeout(() => { bar.style.width = bar.dataset.w + '%'; }, 60);
+      });
+    });
+  });
+});
+
+/* Initialize first panel bars */
+document.querySelectorAll('#tab-automation .skill-bar-fill').forEach(bar => {
+  setTimeout(() => { bar.style.width = bar.dataset.w + '%'; }, 700);
+});
+
+/* ── Contact Form ─── */
+function handleFormSubmit(e) {
+  e.preventDefault();
+  const btn = document.getElementById('form-submit-btn');
+  btn.textContent = 'Transmitting...';
+  btn.disabled = true;
+  btn.style.opacity = '0.6';
+  setTimeout(() => {
+    btn.style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+  }, 1500);
+}
+</script>
 </body>
-
 </html>
