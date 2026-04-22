@@ -1352,7 +1352,7 @@ body::after{
       </div>
 
       <!-- Project 2 -->
-      <div class="project-card reveal delay-1">
+      <!-- <div class="project-card reveal delay-1">
         <div class="pc-thumb">🔌</div>
         <div class="pc-body">
           <div class="pc-type">// API Testing</div>
@@ -1370,7 +1370,7 @@ body::after{
             <a href="#" class="pc-link">📄 Case Study</a>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <!-- Project 3
       <div class="project-card reveal delay-2">
@@ -1435,7 +1435,7 @@ body::after{
       </div> -->
 
       <!-- Project 6 -->
-      <div class="project-card reveal delay-3">
+      <!-- <div class="project-card reveal delay-3">
         <div class="pc-thumb">🔧</div>
         <div class="pc-body">
           <div class="pc-type">// Open Source</div>
@@ -1453,7 +1453,7 @@ body::after{
             <a href="#" class="pc-link">📖 Wiki</a>
           </div>
         </div>
-      </div>
+      </div> -->
 
     </div>
   </div>
@@ -1703,7 +1703,11 @@ body::after{
 <!-- ===================================
      JAVASCRIPT
      =================================== -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
 <script>
+   emailjs.init("Rfi6rC-iIu9rx1ZGe");
+
 /* ── Scroll Progress Bar ─── */
 const progressBar = document.getElementById('progress-bar');
 window.addEventListener('scroll', () => {
@@ -1789,14 +1793,33 @@ document.querySelectorAll('#tab-automation .skill-bar-fill').forEach(bar => {
 /* ── Contact Form ─── */
 function handleFormSubmit(e) {
   e.preventDefault();
+
   const btn = document.getElementById('form-submit-btn');
   btn.textContent = 'Transmitting...';
   btn.disabled = true;
   btn.style.opacity = '0.6';
-  setTimeout(() => {
+
+  emailjs.send(
+    "service_wyare9f",
+    "template_6v9zlqj",
+    {
+      first_name: document.querySelector('input[placeholder="Jane"]').value,
+      last_name: document.querySelector('input[placeholder="Smith"]').value,
+      email: document.querySelector('input[type="email"]').value,
+      subject: document.querySelector('input[placeholder*="QA"]').value,
+      message: document.querySelector('textarea').value,
+    }
+  )
+  .then(() => {
     btn.style.display = 'none';
-    document.getElementById('form-success').style.display = 'block';
-  }, 1500);
+    document.getElementById("form-success").style.display = "block";
+  })
+  .catch((err) => {
+    console.error("Email failed:", err);
+    btn.textContent = 'Send Message ▶';
+    btn.disabled = false;
+    btn.style.opacity = '1';
+  });
 }
 </script>
 </body>
